@@ -8,8 +8,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        customDark: '#25273C',
+      },
+      fontFamily: {
+        josefin: ['Josefin Sans', 'sans-serif'],
       },
     },
   },
