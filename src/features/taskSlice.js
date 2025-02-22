@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 const API_URL = 'http://localhost:8000/api';
 
 //  Fetch all tasks from backend
-export const fetchTasks = createAsyncThunk('task/fetchTasks', async ({ page = 1, perPage = 10 }, { rejectWithValue }) => {
+export const fetchTasks = createAsyncThunk('task/fetchTasks', async ({ page = 1, perPage = 5 }, { rejectWithValue }) => {
   try {
     const token = Cookies.get('auth_token'); // Get token from cookies
     const response = await axios.get(`${API_URL}/tasks?page=${page}&per_page=${perPage}`, {
@@ -44,12 +44,14 @@ export const deleteTask = createAsyncThunk('task/deleteTask', async (taskId, { r
 });
 
 // Toggle task completion (update in API)
-export const toggleComplete = createAsyncThunk('task/toggleComplete', async (taskId, { rejectWithValue }) => {
+export const toggleComplete = createAsyncThunk('task/toggleComplete', async (task, { rejectWithValue }) => {
   try {
     const token = Cookies.get('auth_token');
+    const newStatus = task.status === 'completed' ? 'pending' : 'completed';
+
     const response = await axios.put(
-      `${API_URL}/tasks/${taskId}`,
-      {},
+      `${API_URL}/tasks/${task.id}`,
+      {status: newStatus},
       { headers: { Authorization: `Bearer ${token}` } }
     );
     return response.data; // Return updated task
@@ -106,9 +108,9 @@ const taskSlice = createSlice({
       
       // Handle toggling completion
       .addCase(toggleComplete.fulfilled, (state, action) => {
-        const task = state.tasks.find((task) => task.id === action.payload.id);
-        if (task) {
-          task.completed = action.payload.completed; // Update completion status
+        const task = state.tasks.findIndex((task) => task.id === action.payload.id);
+        if (task !== -1) {
+          state.tasks[task].status = action.payload.status; // Update status
         }
       });
   },

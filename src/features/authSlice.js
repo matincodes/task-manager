@@ -40,10 +40,13 @@ export const registerUser = createAsyncThunk('auth/registerUser', async (userDat
 // Thunk to handle user logout
 export const logoutUser = createAsyncThunk('auth/logoutUser', async (_, { rejectWithValue }) => {
   try {
-    await axios.post(`${API_URL}/logout`);
+    const token = Cookies.get('auth_token');
+    await axios.post(`${API_URL}/logout`,null, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     Cookies.remove('auth_token');
   } catch (error) {
-    return rejectWithValue(error.response.data);
+    return rejectWithValue(error.response.data || 'Error logging out');
   }
 });
 

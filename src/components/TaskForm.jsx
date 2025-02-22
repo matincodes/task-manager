@@ -21,7 +21,7 @@ export default function TaskForm() {
       addTask({
         title: taskData.title,
         description: taskData.description,
-        dueDate: taskData.dueDate,
+        due_date: taskData.dueDate,
         status: "pending",
       })
     );
