@@ -19,6 +19,7 @@ export default function Register() {
    const handleSubmit = async (e) => {
         e.preventDefault();
         const result = await dispatch(registerUser({ name, email, password, password_confirmation: confirmPassword }));
+        console.log(result);
         if (registerUser.fulfilled.match(result)) {
           router.push('/');
         }
