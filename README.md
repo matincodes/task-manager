@@ -126,7 +126,6 @@ This application enables users to register, log in, and manage tasks (create, re
 | **PUT**    | `/api/tasks/{id}`   | Update task                      | `title?`, `description?`, `status?`, `due_date?`  |
 | **DELETE** | `/api/tasks/{id}`   | Delete the specified task        | n/a                                               |
 
-(Adjust if you have additional endpoints, e.g. `DELETE /api/tasks/clear-completed`.)
 
 ---
 
@@ -137,6 +136,6 @@ This application enables users to register, log in, and manage tasks (create, re
 3. **View** existing tasks.  
    - Pagination controls appear if you have multiple pages.  
 4. **Toggle** a task’s status by clicking its check circle (switch between `pending`/`completed`).  
-5. **Delete** tasks by clicking the “X” button.
+5. **Delete** tasks by clicking the “Delete” button.
 
 ---
